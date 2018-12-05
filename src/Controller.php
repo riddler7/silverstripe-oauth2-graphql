@@ -142,4 +142,22 @@ class Controller extends GraphQLController
         return $response;
     }
 
+    /**
+     * Prevent error when there is no member. It is up to resolvers to determine whether login is required.
+     *
+     * @param HTTPRequest $request
+     *
+     * @return \SilverStripe\Security\Member
+     * @throws \SilverStripe\ORM\ValidationException
+     */
+    protected function getRequestUser(HTTPRequest $request)
+    {
+        // if permissions required, pass off to parent to enforce member
+        if ($request->param('Permissions')) {
+            return parent::getRequestUser($request);
+        }
+
+        return $this->getAuthHandler()->getAuthenticator()->authenticate($request);
+    }
+
 }
