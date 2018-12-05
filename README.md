@@ -1,16 +1,15 @@
 # SilverStripe Oauth2 Server
 
-[![Build Status](https://travis-ci.org/advanced-learning/silverstripe-oauth2-server.svg?branch=master)](https://travis-ci.org/advanced-learning/silverstripe-oauth2-server)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/advanced-learning/silverstripe-oauth2-server/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/advanced-learning/silverstripe-oauth2-server/?branch=master)
-[![codecov](https://codecov.io/gh/advanced-learning/silverstripe-oauth2-server/branch/master/graph/badge.svg)](https://codecov.io/gh/advanced-learning/silverstripe-oauth2-server)
+[![Build Status](https://travis-ci.org/riddler7/silverstripe-oauth2-graphql.svg?branch=master)](https://travis-ci.org/riddler7/silverstripe-oauth2-graphql)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/riddler7/silverstripe-oauth2-graphql/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/riddler7/silverstripe-oauth2-graphql/?branch=master)
+[![codecov](https://codecov.io/gh/riddler7/silverstripe-oauth2-graphql/branch/master/graph/badge.svg)](https://codecov.io/gh/riddler7/silverstripe-oauth2-graphql)
 
-OAuth2 server for SilverStripe 4.
+Adds support for oauth2 authentication (using advanced-learning/silverstripe-oauth2-server).
 
 ## Requirements
 
 * `silverstripe/framework` ^4.0
-* `league/oauth2-server`
-* `robbie/psr7-adapters`
+* `advanced-learning/silverstripe-oauth2-server`
 * `PHP >= 7.1`
 
 ## Installation
@@ -18,12 +17,18 @@ OAuth2 server for SilverStripe 4.
 Install with [Composer](https://getcomposer.org):
 
 ```shell
-composer require advanced-learning/silverstripe-oauth-server
+composer require riddler7/silverstripe-oauth-graphql
 ```
 
-## Oauth Support
+## Usage
 
-Currently supports client and password grants. The client grant uses the endpoint '/oauth/authorizse'.
-Currently requires securing api endpoints manually. There is a middleware but this would affect all requests.
-The same logic could be used in conjunction with allowed_actions on the controller.
+Adds the oauth to the context in graphql. To enable you need to configure your own graphql endpoint to use the controller
+from this module as it overwrites the index method of the default graphql controller to allow it access the the request
+add add contexts.
 
+```yaml
+SilverStripe\Control\Director:
+  rules:
+    mygraphqlurl:
+      Controller: 'Riddler7\Oauth2GraphQL\Controller'
+```
