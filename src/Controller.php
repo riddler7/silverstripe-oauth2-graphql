@@ -165,5 +165,4 @@ class Controller extends GraphQLController
 
         return $authenticator ? $authenticator->authenticate($request) : null;
     }
-
 }

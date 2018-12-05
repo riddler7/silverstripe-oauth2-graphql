@@ -2,7 +2,6 @@
 
 namespace Riddler7\Oauth2GraphQL;
 
-
 use AdvancedLearning\Oauth2Server\Exceptions\AuthenticationException;
 use AdvancedLearning\Oauth2Server\Models\Client;
 use function is_null;
