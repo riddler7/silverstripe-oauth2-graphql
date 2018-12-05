@@ -18,6 +18,7 @@ use League\OAuth2\Server\CryptTrait;
 use League\OAuth2\Server\Grant\ClientCredentialsGrant;
 use League\OAuth2\Server\Grant\PasswordGrant;
 use Riddler7\Oauth2GraphQL\Controller;
+use Riddler7\Oauth2GraphQL\Helpers\OauthContext;
 use Riddler7\Oauth2GraphQL\Tests\BlankMutation;
 use Riddler7\Oauth2GraphQL\Tests\BlankQuery;
 use Riddler7\Oauth2GraphQL\Tests\BlankType;
@@ -34,7 +35,7 @@ use function sys_get_temp_dir;
 
 class GraphqlTest extends SapphireTest
 {
-    use CryptTrait;
+    use CryptTrait, OauthContext;
 
     protected static $fixture_file = 'tests/OAuthFixture.yml';
 
@@ -176,7 +177,7 @@ class GraphqlTest extends SapphireTest
         $manager = new Manager('myschema');
 
         // extract the context
-        $manager->addMiddleware(new GraphQLSchemaExtractor(function($currentContext) use (&$context) {
+        $manager->addMiddleware(new GraphQLSchemaExtractor(function ($currentContext) use (&$context) {
             $context = $currentContext;
         }));
 
@@ -186,6 +187,38 @@ class GraphqlTest extends SapphireTest
         $this->assertEquals($client->Identifier, $context['oauthClientIdentifier']);
         $this->assertEquals(1, count($context['oauthScopes']));
         $this->assertEquals('members', $context['oauthScopes'][0]);
+
+        // test the context helper
+        $this->assertEquals(
+            true,
+            $this->hasOauthClient($context),
+            'Context should contain a client'
+        );
+        $this->assertEquals(
+            true,
+            $this->hasScope($context, 'members'),
+            'Context should have a \'members\' scope'
+        );
+        $this->assertEquals(
+            false,
+            $this->hasScope($context, 'admin'),
+            'Context should not have an \'admin\' scope'
+        );
+        $this->assertEquals(
+            true,
+            $this->hasScopes($context,
+                ['members'])
+        );
+        $this->assertEquals(
+            false,
+            $this->hasScopes($context,
+                ['admin'])
+        );
+        $this->assertEquals(
+            $client->ID,
+            $this->getOauthClient($context)->ID,
+            'The ids for the Oauth Client should match'
+        );
     }
 
     /**
