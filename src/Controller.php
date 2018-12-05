@@ -2,7 +2,7 @@
 
 namespace Riddler7\Oauth2GraphQL;
 
-use League\Flysystem\Exception;
+use Exception;
 use SilverStripe\Control\Director;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Control\HTTPRequest;
@@ -116,6 +116,10 @@ class Controller extends GraphQLController
 
         if (!empty($request->getHeader('oauth_client_id'))) {
             $manager->addContext('oauthClientIdentifier', $request->getHeader('oauth_client_id'));
+
+            // request must have an oauth client
+        } else {
+            throw new Exception('A valid client is required', 403);
         }
     }
 

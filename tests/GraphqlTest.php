@@ -13,6 +13,7 @@ use GraphQL\Type\Definition\Type;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\ServerRequest;
 use Lcobucci\JWT\Parser;
+use League\Flysystem\Exception;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\CryptTrait;
 use League\OAuth2\Server\Grant\ClientCredentialsGrant;
@@ -220,6 +221,47 @@ class GraphqlTest extends SapphireTest
             'The ids for the Oauth Client should match'
         );
     }
+
+    /**
+     * Verify an error response is returned if there is no oauth client.
+     */
+    public function testNoClient()
+    {
+        $request = new HTTPRequest('GET', '/grqphql');
+        // fake server port
+        $_SERVER['SERVER_PORT'] = 443;
+
+        // var to store context
+        $context = [];
+
+        // setup blank schema
+        Config::modify()->set(Manager::class, 'schemas', [
+            'myschema' => [
+                'types' => [
+                    'Blank' => BlankType::class
+                ],
+                'queries' => [
+                    'BlankQuery' => BlankQuery::class
+                ],
+                'mutations' => [
+                    'BlankMutation' => BlankMutation::class
+                ]
+            ]
+        ]);
+
+        $manager = new Manager('myschema');
+
+        $controller = new Controller($manager);
+
+        $response = $controller->index($request);
+        $json = json_decode($response->getBody(), true);
+
+        $error = $json['errors'][0];
+
+        $this->assertEquals(403, $error['code'], 'Should return a 403 error code');
+        $this->assertEquals($error['message'], 'A valid client is required', 'Should have a useful message');
+    }
+
 
     /**
      * Setup the Authorization Server.
