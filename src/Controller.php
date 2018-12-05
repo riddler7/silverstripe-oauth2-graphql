@@ -157,7 +157,9 @@ class Controller extends GraphQLController
             return parent::getRequestUser($request);
         }
 
-        return $this->getAuthHandler()->getAuthenticator()->authenticate($request);
+        $authenticator = $this->getAuthHandler()->getAuthenticator($request);
+
+        return $authenticator ? $authenticator->authenticate($request) : null;
     }
 
 }
