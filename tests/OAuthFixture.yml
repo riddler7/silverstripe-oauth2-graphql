@@ -1,0 +1,31 @@
+AdvancedLearning\Oauth2Server\Models\Client:
+  webapp:
+    Name: 'My Web App'
+    Grants: 'password,client_credentials'
+    Secret: 'Thisisareallybadsecret'
+    Identifier: 'Thisisanidentifier'
+
+AdvancedLearning\Oauth2Server\Models\Scope:
+  members:
+    Name: 'members'
+    Description: 'Scope for members'
+  scope1:
+    Name: 'scope1'
+    Description: 'First Scope'
+  scope2:
+    Name: 'scope2'
+    Description: 'Second Scope'
+
+SilverStripe\Security\Group:
+  group1:
+    Title: 'First Group'
+    Code: 'group1'
+    Scopes: =>AdvancedLearning\Oauth2Server\Models\Scope.scope1
+
+SilverStripe\Security\Member:
+  member1:
+    FirstName: My
+    Surname: Test
+    Email: 'test@oauth.com'
+    Password: 'password1'
+    Groups: =>SilverStripe\Security\Group.group1

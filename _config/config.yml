@@ -1,0 +1,4 @@
+SilverStripe\GraphQL\Auth\Handler:
+  authenticators:
+    - class: Riddler7\Oauth2Graphql\Authenticator
+      priority: 30
