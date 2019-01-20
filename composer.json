@@ -14,7 +14,7 @@
         "silverstripe/framework": "^4.0",
         "silverstripe/vendor-plugin": "^1.0",
         "PHP": ">=7.1",
-        "silverstripe/graphql": "^3.0"
+        "silverstripe/graphql": "*"
     },
     "repositories": [
         {
