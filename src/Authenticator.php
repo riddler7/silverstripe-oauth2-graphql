@@ -25,7 +25,7 @@ class Authenticator implements AuthenticatorInterface
                 return Member::get()->filter(['Email' => $userId])->first();
             }
         } catch (AuthenticationException $exception) {
-            throw new ValidationException($exception->getMessage(), 403);
+            throw new ValidationException($exception->getMessage(), $exception->getCode() ?: 403);
         }
     }
 
