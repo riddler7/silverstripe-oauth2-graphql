@@ -62,6 +62,18 @@ class Controller extends GraphQLController
             // Run query
             $result = $manager->query($query, $variables);
         } catch (Exception $exception) {
+            $errorCode = $exception->getCode();
+
+            // check for an http error, if we have one, return it straight away with correct http status code
+            if ($errorCode >= 400 || $errorCode <= 599) {
+                $result = [
+                    'errors' => ['message' => $exception->getMessage(), 'code' => $exception->getCode()]
+                ];
+
+                $response = $this->addCorsHeaders($request, new HTTPResponse(json_encode($result), $exception->getCode()));
+                return $response->addHeader('Content-Type', 'application/json');
+            }
+
             $error = ['message' => $exception->getMessage()];
 
             if (Director::isDev()) {
