@@ -2,7 +2,7 @@
 
 namespace AdvancedLearning\Oauth2Server\Tests;
 
-use GraphQL\Schema;
+use GraphQL\Type\Schema;
 use SilverStripe\GraphQL\Middleware\QueryMiddleware;
 
 class GraphQLSchemaExtractor implements QueryMiddleware

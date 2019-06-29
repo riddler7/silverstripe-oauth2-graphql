@@ -1,38 +1,42 @@
 {
-    "name": "riddler7/silverstripe-oauth2-graphql",
-    "description": "SilverStripe module for adding graphql support to oauth2 server",
-    "type": "silverstripe-vendormodule",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Conrad Dobbs",
-            "email": "riddler400@gmail.com"
-        }
-    ],
-    "require": {
-        "advanced-learning/silverstripe-oauth2-server": "dev-master",
-        "silverstripe/framework": "^4.0",
-        "silverstripe/vendor-plugin": "^1.0",
-        "PHP": ">=7.1",
-        "silverstripe/graphql": "*"
+  "name": "riddler7/silverstripe-oauth2-graphql",
+  "description": "SilverStripe module for adding graphql support to oauth2 server",
+  "type": "silverstripe-vendormodule",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Conrad Dobbs",
+      "email": "riddler400@gmail.com"
+    }
+  ],
+  "require": {
+    "advanced-learning/silverstripe-oauth2-server": "dev-master",
+    "silverstripe/framework": "^4.0",
+    "silverstripe/vendor-plugin": "^1.0",
+    "PHP": ">=7.1",
+    "silverstripe/graphql": "dev-PHP7.3 as 3.7.x-dev"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/riddler7/silverstripe-oauth2-server"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/riddler7/silverstripe-oauth2-server"
-        }
-    ],
-    "require-dev": {
-        "phpunit/PHPUnit": "^5.7@stable",
-        "silverstripe/sqlite3": "^2.1",
-        "squizlabs/php_codesniffer": "^3.3"
-    },
-    "autoload": {
-        "psr-4": {
-            "Riddler7\\Oauth2GraphQL\\": "src",
-            "Riddler7\\Oauth2GraphQL\\Tests\\": "tests"
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    {
+      "type": "vcs",
+      "url": "https://github.com/riddler7/silverstripe-graphql"
+    }
+  ],
+  "require-dev": {
+    "phpunit/PHPUnit": "^5.7@stable",
+    "silverstripe/sqlite3": "^2.1",
+    "squizlabs/php_codesniffer": "^3.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Riddler7\\Oauth2GraphQL\\": "src",
+      "Riddler7\\Oauth2GraphQL\\Tests\\": "tests"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
