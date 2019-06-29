@@ -14,16 +14,12 @@
     "silverstripe/framework": "^4.0",
     "silverstripe/vendor-plugin": "^1.0",
     "PHP": ">=7.1",
-    "silverstripe/graphql": "dev-PHP7.3 as 3.7.x-dev"
+    "silverstripe/graphql": "^3.0"
   },
   "repositories": [
     {
       "type": "vcs",
       "url": "https://github.com/riddler7/silverstripe-oauth2-server"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/riddler7/silverstripe-graphql"
     }
   ],
   "require-dev": {
